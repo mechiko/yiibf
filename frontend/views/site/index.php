@@ -1,50 +1,96 @@
-<div class="container">
+<?php $this->pageTitle=Yii::app()->name; ?>
 
-	<!-- Main hero unit for a primary marketing message or call to action -->
-	<div class="hero-unit">
-		<h1>Hello, world!</h1>
+<h1>Welcome to <i><?php echo CHtml::encode(Yii::app()->name); ?></i></h1>
 
-		<p>This is a template for a simple marketing or informational website. It includes a large callout called the
-			hero unit and three supporting pieces of content. Use it as a starting point to create something more
-			unique.</p>
+<?php Yii::app()->user->setFlash('success', '<strong>Well done!</strong> You have successfully created your Yii application.');?>
+<?php $this->widget('bootstrap.widgets.TbAlert'); ?>
 
-		<p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+<p>You may change the content of this page by modifying the following two files:</p>
+<ul>
+	<li>View file: <tt><?php echo __FILE__; ?></tt></li>
+	<li>Layout file: <tt><?php echo $this->getLayoutFile('main'); ?></tt></li>
+</ul>
+
+<?php $this->beginWidget(
+	'bootstrap.widgets.TbModal',
+	array(
+		'id' => 'myModal',
+			'htmlOptions' => array(
+			'tabindex' => -1,
+//	    	'role' => 'dialog',
+			'aria-labelledby' => 'myModalLabel',
+//	    	'aria-hidden' => true,
+		)
+	)
+); ?>
+
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">&times;</a>
+		<h4>Modal header</h4>
 	</div>
 
-	<!-- Example row of columns -->
-	<div class="row">
-		<div class="span4">
-			<h2>Heading</h2>
-
-			<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-				condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis
-				euismod. Donec sed odio dui. </p>
-
-			<p><a class="btn" href="#">View details &raquo;</a></p>
-		</div>
-		<div class="span4">
-			<h2>Heading</h2>
-
-			<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-				condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis
-				euismod. Donec sed odio dui. </p>
-
-			<p><a class="btn" href="#">View details &raquo;</a></p>
-		</div>
-		<div class="span4">
-			<h2>Heading</h2>
-
-			<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula
-				porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-				fermentum massa justo sit amet risus.</p>
-
-			<p><a class="btn" href="#">View details &raquo;</a></p>
-		</div>
+	<div class="modal-body">
+		<p>One fine body...</p>
 	</div>
 
-	<hr>
+	<div class="modal-footer">
+		<?php $this->widget(
+			'bootstrap.widgets.TbButton',
+			array(
+				'type' => 'primary',
+				'label' => 'Save changes',
+				'url' => '#',
+				'htmlOptions' => array('data-dismiss' => 'modal'),
+			)
+		); ?>
+		<?php $this->widget(
+			'bootstrap.widgets.TbButton',
+			array(
+				'label' => 'Close',
+				'url' => '#',
+				'htmlOptions' => array('data-dismiss' => 'modal'),
+			)
+		); ?>
+	</div>
 
-	<footer>
-		<p>&copy; Company 2012</p>
-	</footer>
-</div>
+<?php $this->endWidget(); ?>
+<?php $this->widget(
+	'bootstrap.widgets.TbButton',
+	array(
+		'label' => 'Click me',
+		'type' => 'primary',
+		'htmlOptions' => array(
+			'data-toggle' => 'modal',
+			'data-target' => '#myModal',
+		),
+	)
+);
+?>
+
+<?php $gridDataProvider = new CArrayDataProvider(array(
+	array('id'=>1, 'firstName'=>'Mark', 'lastName'=>'Otto', 'language'=>'CSS'),
+	array('id'=>2, 'firstName'=>'Jacob', 'lastName'=>'Thornton', 'language'=>'JavaScript'),
+	array('id'=>3, 'firstName'=>'Stu', 'lastName'=>'Dent', 'language'=>'HTML'),
+));
+?>
+<?php $this->widget('bootstrap.widgets.TbGridView', array(
+	'type'=>'striped bordered condensed',
+	'dataProvider'=>$gridDataProvider,
+	'template'=>"{items}",
+//	'htmlOptions' => array(
+//		'class' => 'table-responsive grid-view',
+//	),
+	'columns'=>array(
+		array('name'=>'id', 'header'=>'#'),
+		array('name'=>'firstName', 'header'=>'First name'),
+		array('name'=>'lastName', 'header'=>'Last name'),
+		array('name'=>'language', 'header'=>'Language'),
+		array(
+			'class'=>'bootstrap.widgets.TbButtonColumn',
+			'viewButtonUrl'=>'Yii::app()->controller->createUrl("view",array("id"=>$data["id"]))',
+			'updateButtonUrl'=>'Yii::app()->controller->createUrl("update",array("id"=>$data["id"]))',
+			'deleteButtonUrl'=>'Yii::app()->controller->createUrl("delete",array("id"=>$data["id"]))',
+			'htmlOptions'=>array('style'=>'width: 50px'),
+		),
+	),
+)); ?>

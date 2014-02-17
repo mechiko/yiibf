@@ -9,13 +9,13 @@
  */
 return array(
 	'components' => array(
-//		change it to suit your needs
+//		configure to suit your needs
 //		'db' => array(
 //			'connectionString' => '{DB_CONNECTION}',
 //			'username' => '{DB_USER}',
 //			'password' => '{DB_PASSWORD}',
-//			'enableProfiling' => false,
-//			'enableParamLogging' => false,
+//			'enableProfiling' => YII_DEBUG,
+//			'enableParamLogging' => YII_DEBUG,
 //			'charset' => 'utf8',
 //		),
 	),

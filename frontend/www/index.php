@@ -11,6 +11,7 @@
 
 require('./../../common/lib/vendor/autoload.php');
 
+
 Yiinitializr\Helpers\Initializer::create('./../', 'frontend', array(
 	__DIR__ .'/../../common/config/main.php',
 	__DIR__ .'/../../common/config/env.php',
